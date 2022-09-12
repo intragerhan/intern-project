@@ -35,8 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
-gradle-wrapper.jar
-gradle-wrapper.properties
 settings.gradle
 gradlew.bat
 gradlew
+logs\
+gradle\
