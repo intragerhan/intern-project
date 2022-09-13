@@ -2,11 +2,9 @@ package com.intern.ambassador.data.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @ToString
 @Builder
 public class ApplicationDto {

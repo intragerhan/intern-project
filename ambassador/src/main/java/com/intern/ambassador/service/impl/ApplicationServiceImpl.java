@@ -32,11 +32,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = getApplicationEntity(applicationDto);
         Application savedApplication = applicationRepository.save(application);
         ApplicationResponseDto applicationResponseDto = getApplicationResponseDto(savedApplication);
+        LOGGER.info("[submitApplication] applicationResponseDto : {}", applicationResponseDto);
         return applicationResponseDto;
     }
 
     @Override
-    public ApplicationResponseDto changeContents(ChangeContentsDto changeContentsDto) throws Exception {
+    public ApplicationResponseDto changeContents(ChangeContentsDto changeContentsDto) {
         Application foundApplication = applicationRepository.findById(changeContentsDto.getAno()).get();
         foundApplication.setReason(changeContentsDto.getReason());
         foundApplication.setFeedback(changeContentsDto.getFeedback());

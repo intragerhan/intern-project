@@ -30,8 +30,8 @@ public interface ApplicationService {
         application.setReason(applicationDto.getReason());
         application.setFeedback(applicationDto.getFeedback());
         application.setActivity(applicationDto.getActivity());
-        application.setAdvantage(application.getAdvantage());
-        application.setLastWord(application.getLastWord());
+        application.setAdvantage(applicationDto.getAdvantage());
+        application.setLastWord(applicationDto.getLastWord());
 
         return application;
     }

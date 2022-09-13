@@ -35,8 +35,11 @@ dependencies {
 //    implementation 'com.querydsl:querydsl-jpa:5.0.0'
 //    implementation 'com.querydsl:querydsl-apt:5.0.0'
 
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+    testImplementation 'com.h2database:h2:2.1.214'
 }
 
 tasks.named('test') {

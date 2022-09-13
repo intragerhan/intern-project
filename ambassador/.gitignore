@@ -40,3 +40,8 @@ gradlew.bat
 gradlew
 logs\
 gradle\
+gradle-wrapper.jar
+gradle-wrapper.properties
+wrapper\
+info.log
+info_type_IS_UNDEFINED.2022-09-12.gz

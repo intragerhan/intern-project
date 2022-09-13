@@ -7,11 +7,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 @EqualsAndHashCode
 //@EntityListeners(AuditingEntityListener.class)
 @Table(name = "application")
@@ -22,23 +23,20 @@ public class Application {
     private Long ano;
 
     @Lob
-    @Column(nullable = false)
     private String reason;
 
     @Lob
-    @Column(nullable = false)
     private String feedback;
 
     @Lob
-    @Column(nullable = false)
     private String activity;
 
     @Lob
-    @Column(nullable = false)
     private String advantage;
 
     @Lob
-    @Column(nullable = false)
     private String lastWord;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
