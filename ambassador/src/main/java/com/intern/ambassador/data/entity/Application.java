@@ -1,8 +1,6 @@
 package com.intern.ambassador.data.entity;
 
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,11 +10,10 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@EqualsAndHashCode
-//@EntityListeners(AuditingEntityListener.class)
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "application")
-public class Application {
+public class Application extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +34,5 @@ public class Application {
     @Lob
     private String lastWord;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+//    @OneToOne(name = "user_id")
 }
