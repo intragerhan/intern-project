@@ -31,21 +31,29 @@ public class SignServiceImpl implements SignService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // todo 구현 다 하면 이거 entity가 아닌 dto로 받을 수 있게 변경하기
     @Override
-    public SignUpResultDto signUp(String id, String password, String name, String role) {
+    public SignUpResultDto signUp(String id, String password, String email,
+                                  String name, int age, String phone, String role) {
         LOGGER.info("[getSignUpResult] 회원 가입 정보 전달");
         User user;
         if(role.equalsIgnoreCase("admin")) {
             user = User.builder()
                     .uid(id)
+                    .email(email)
                     .name(name)
+                    .age(age)
+                    .phoneNumber(phone)
                     .password(passwordEncoder.encode(password))
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         } else {
             user = User.builder()
                     .uid(id)
+                    .email(email)
                     .name(name)
+                    .age(age)
+                    .phoneNumber(phone)
                     .password(passwordEncoder.encode(password))
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();

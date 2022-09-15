@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,8 +32,19 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Email
+    @Column(nullable = false)
+    private String email;
+
     @Column(nullable = false)
     private String name;
+
+    @Min(value = 20) @Max(value = 90)
+    private int age;
+
+    @Pattern(regexp = "01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$")
+    @Column(nullable = false)
+    private String phoneNumber;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

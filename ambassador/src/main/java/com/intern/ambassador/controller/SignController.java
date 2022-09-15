@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,12 +39,16 @@ public class SignController {
 
     @PostMapping(value = "/sign-up")
     public SignUpResultDto signUp(
-            @ApiParam(value = "ID", required = true) @RequestParam String id,
-            @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-            @ApiParam(value = "이름", required = true) @RequestParam String name,
+            @Validated @ApiParam(value = "ID", required = true) @RequestParam String id,
+            @Validated @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
+            @Validated @ApiParam(value = "이메일", required = true) @RequestParam String email,
+            @Validated @ApiParam(value = "이름", required = true) @RequestParam String name,
+            @Validated @ApiParam(value = "나이", required = true) @RequestParam int age,
+            @Validated @ApiParam(value = "핸드폰 번호", required = true) @RequestParam String phone,
             @ApiParam(value = "권한", required = true) @RequestParam String role) {
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, name : {}, role : {}", id, name, role);
-        SignUpResultDto signUpResultDto = signService.signUp(id, password, name, role);
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, email : {}," +
+                " name : {}, age : {}, phone : {}, role : {}", id, email, name, age, phone, role);
+        SignUpResultDto signUpResultDto = signService.signUp(id, password, email, name, age, phone, role);
 
         LOGGER.info("[signUp] 회원가입이 완료되었습니다. id : {}", id);
         return signUpResultDto;
