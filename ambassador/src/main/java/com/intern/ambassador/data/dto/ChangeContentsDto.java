@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChangeContentsDto {
+
     private Long ano;
     private String reason;
     private String feedback;

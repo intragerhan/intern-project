@@ -31,6 +31,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         LOGGER.info("[submitApplication] applicationDto : {}", applicationDto.toString());
         Application application = getApplicationEntity(applicationDto);
         Application savedApplication = applicationRepository.save(application);
+        getApplicationResponseDto(savedApplication).setAno(savedApplication.getAno());
         ApplicationResponseDto applicationResponseDto = getApplicationResponseDto(savedApplication);
         LOGGER.info("[submitApplication] applicationResponseDto : {}", applicationResponseDto);
         return applicationResponseDto;
@@ -39,12 +40,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationResponseDto changeContents(ChangeContentsDto changeContentsDto) {
         Application foundApplication = applicationRepository.findById(changeContentsDto.getAno()).get();
-        foundApplication.setReason(changeContentsDto.getReason());
-        foundApplication.setFeedback(changeContentsDto.getFeedback());
-        foundApplication.setActivity(changeContentsDto.getActivity());
-        foundApplication.setAdvantage(changeContentsDto.getAdvantage());
-        foundApplication.setLastWord(changeContentsDto.getLastWord());
-
+        getApplicationResponseDto(foundApplication);
         Application changedContents = applicationRepository.save(foundApplication);
 
         ApplicationResponseDto applicationResponseDto = getApplicationResponseDto(changedContents);

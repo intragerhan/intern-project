@@ -46,7 +46,7 @@ public class SignController {
             @Validated @ApiParam(value = "나이", required = true) @RequestParam int age,
             @Validated @ApiParam(value = "핸드폰 번호", required = true) @RequestParam String phone,
             @ApiParam(value = "권한", required = true) @RequestParam String role) {
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password : ****, email : {}," +
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, email : {}," +
                 " name : {}, age : {}, phone : {}, role : {}", id, email, name, age, phone, role);
         SignUpResultDto signUpResultDto = signService.signUp(id, password, email, name, age, phone, role);
 

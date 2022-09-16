@@ -1,6 +1,7 @@
 package com.intern.ambassador.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.intern.ambassador.config.annotation.Password;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,10 +40,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String name;
 
-    @Min(value = 20) @Max(value = 90)
     private int age;
 
-    @Pattern(regexp = "01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$")
     @Column(nullable = false)
     private String phoneNumber;
 
