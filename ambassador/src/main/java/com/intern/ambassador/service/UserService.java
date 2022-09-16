@@ -6,7 +6,6 @@ import com.intern.ambassador.data.entity.User;
 
 public interface UserService {
     UserResponseDto getUserInfo(Long uno);
-    UserResponseDto createUser(UserDto userDto);
     UserResponseDto changeUserInfo(ChangeUserInfoDto changeUserInfoDto) throws Exception;
     void withdrawUser(String uid, String password) throws Exception;
 

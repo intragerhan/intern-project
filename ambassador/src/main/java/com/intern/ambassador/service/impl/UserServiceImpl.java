@@ -29,17 +29,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto createUser(UserDto userDto) {
-        LOGGER.info("[createUser] userDto : {}", userDto.toString());
-        User user = getUserEntity(userDto);
-        User savedUser = userRepository.save(user);
-        getUserResponseDto(savedUser).setUno(savedUser.getId());
-        UserResponseDto userResponseDto = getUserResponseDto(savedUser);
-        LOGGER.info("[createUser] userResponseDto : {}", userResponseDto);
-        return userResponseDto;
-    }
-
-    @Override
     public UserResponseDto changeUserInfo(ChangeUserInfoDto changeUserInfoDto) throws Exception {
         User foundUser = userRepository.findById(changeUserInfoDto.getUno()).get();
         getUserResponseDto(foundUser);
@@ -51,6 +40,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void withdrawUser(String uid, String password) throws Exception {
-        userRepository.deleteUserBy(uid, password);
+        userRepository.deleteUserByUidAndPassword(uid, password);
     }
 }

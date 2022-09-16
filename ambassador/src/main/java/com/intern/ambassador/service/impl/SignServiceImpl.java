@@ -3,7 +3,9 @@ package com.intern.ambassador.service.impl;
 import com.intern.ambassador.common.CommonResponse;
 import com.intern.ambassador.config.security.JwtTokenProvider;
 import com.intern.ambassador.data.dto.SignInResultDto;
+import com.intern.ambassador.data.dto.SignUpRequestDto;
 import com.intern.ambassador.data.dto.SignUpResultDto;
+import com.intern.ambassador.data.dto.UserDto;
 import com.intern.ambassador.data.entity.User;
 import com.intern.ambassador.data.repository.UserRepository;
 import com.intern.ambassador.service.SignService;
@@ -36,25 +38,27 @@ public class SignServiceImpl implements SignService {
     public SignUpResultDto signUp(String id, String password, String email,
                                   String name, int age, String phone, String role) {
         LOGGER.info("[getSignUpResult] 회원 가입 정보 전달");
+        SignUpRequestDto signUpRequestDto = gatherInfo(id, password, email, name, age, phone);
+        User convertedInfo = convertDtoToEntity(signUpRequestDto);
         User user;
         if(role.equalsIgnoreCase("admin")) {
             user = User.builder()
-                    .uid(id)
-                    .email(email)
-                    .name(name)
-                    .age(age)
-                    .phoneNumber(phone)
-                    .password(passwordEncoder.encode(password))
+                    .uid(convertedInfo.getUid())
+                    .email(convertedInfo.getEmail())
+                    .name(convertedInfo.getName())
+                    .age(convertedInfo.getAge())
+                    .phoneNumber(convertedInfo.getPhoneNumber())
+                    .password(passwordEncoder.encode(convertedInfo.getPassword()))
                     .roles(Collections.singletonList("ROLE_ADMIN"))
                     .build();
         } else {
             user = User.builder()
-                    .uid(id)
-                    .email(email)
-                    .name(name)
-                    .age(age)
-                    .phoneNumber(phone)
-                    .password(passwordEncoder.encode(password))
+                    .uid(convertedInfo.getUid())
+                    .email(convertedInfo.getEmail())
+                    .name(convertedInfo.getName())
+                    .age(convertedInfo.getAge())
+                    .phoneNumber(convertedInfo.getPhoneNumber())
+                    .password(passwordEncoder.encode(convertedInfo.getPassword()))
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
         }
@@ -105,5 +109,32 @@ public class SignServiceImpl implements SignService {
         result.setSuccess(false);
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());
+    }
+
+    private SignUpRequestDto gatherInfo(String id, String password, String email,
+                                        String name, int age, String phone) {
+        SignUpRequestDto signUpRequestDto = new SignUpRequestDto();
+
+        signUpRequestDto.setUid(id);
+        signUpRequestDto.setPassword(password);
+        signUpRequestDto.setEmail(email);
+        signUpRequestDto.setName(name);
+        signUpRequestDto.setAge(age);
+        signUpRequestDto.setPhoneNumber(phone);
+
+        return signUpRequestDto;
+    }
+
+    private User convertDtoToEntity(SignUpRequestDto signUpRequestDto) {
+        User user = new User();
+
+        user.setUid(signUpRequestDto.getUid());
+        user.setPassword(signUpRequestDto.getPassword());
+        user.setEmail(signUpRequestDto.getEmail());
+        user.setName(signUpRequestDto.getName());
+        user.setAge(signUpRequestDto.getAge());
+        user.setPhoneNumber(signUpRequestDto.getPhoneNumber());
+
+        return user;
     }
 }
