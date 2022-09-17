@@ -45,4 +45,6 @@ public class SwaggerConfiguration {
             @ApiParam(value = "마지막 한 마디", required = true) @RequestParam String lastWord) {
         return reason + ' ' + feedback + ' ' + activity + ' ' + advantage + ' ' + lastWord;
     }
+
+
 }

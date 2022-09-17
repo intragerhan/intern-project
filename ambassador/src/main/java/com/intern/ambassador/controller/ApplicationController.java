@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ApplicationController {
     private final Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
-
     private final ApplicationService applicationService;
 
     @ApiImplicitParams({
@@ -42,8 +41,8 @@ public class ApplicationController {
     }
 
     /** 관리자가 신청서 확인 */
-    @GetMapping
-    public ResponseEntity<ApplicationResponseDto> inspectApplication(Long ano) {
+    @GetMapping("{id}")
+    public ResponseEntity<ApplicationResponseDto> inspectApplication(@PathVariable("id") Long ano) {
         ApplicationResponseDto applicationResponseDto = applicationService.getApplication(ano);
         return ResponseEntity.status(HttpStatus.OK).body(applicationResponseDto);
     }

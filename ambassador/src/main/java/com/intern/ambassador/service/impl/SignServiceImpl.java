@@ -33,7 +33,6 @@ public class SignServiceImpl implements SignService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // todo 구현 다 하면 이거 entity가 아닌 dto로 받을 수 있게 변경하기
     @Override
     public SignUpResultDto signUp(String id, String password, String email,
                                   String name, int age, String phone, String role) {

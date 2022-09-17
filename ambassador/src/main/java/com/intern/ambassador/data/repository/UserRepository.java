@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User getByUid(String uid);
-    User deleteUserByUidAndPassword(String uid, String password);
+    User deleteUserByIdAndUidAndPassword(Long id, String uid, String password);
 }

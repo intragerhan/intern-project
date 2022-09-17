@@ -33,5 +33,7 @@ public class Application extends BaseEntity {
     @Lob
     private String lastWord;
 
-//    @OneToOne(name = "user_id")
+    @OneToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

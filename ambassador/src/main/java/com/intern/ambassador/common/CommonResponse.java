@@ -1,6 +1,5 @@
 package com.intern.ambassador.common;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

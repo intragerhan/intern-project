@@ -49,6 +49,9 @@ public class User implements UserDetails {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user")
+    private Application application;
+
     /** 계정이 가지고 있는 권한들을 반환 */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

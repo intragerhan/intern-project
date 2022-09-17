@@ -14,6 +14,7 @@ public interface ApplicationService {
     default ApplicationResponseDto getApplicationResponseDto(Application application) {
         ApplicationResponseDto applicationResponseDto = new ApplicationResponseDto();
 
+        applicationResponseDto.setAno(application.getAno());
         applicationResponseDto.setReason(application.getReason());
         applicationResponseDto.setFeedback(application.getFeedback());
         applicationResponseDto.setActivity(application.getActivity());

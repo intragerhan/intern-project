@@ -31,7 +31,6 @@ public class ApplicationServiceImpl implements ApplicationService {
         LOGGER.info("[submitApplication] applicationDto : {}", applicationDto.toString());
         Application application = getApplicationEntity(applicationDto);
         Application savedApplication = applicationRepository.save(application);
-        getApplicationResponseDto(savedApplication).setAno(savedApplication.getAno());
         ApplicationResponseDto applicationResponseDto = getApplicationResponseDto(savedApplication);
         LOGGER.info("[submitApplication] applicationResponseDto : {}", applicationResponseDto);
         return applicationResponseDto;
