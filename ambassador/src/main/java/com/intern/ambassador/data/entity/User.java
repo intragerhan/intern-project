@@ -49,7 +49,7 @@ public class User implements UserDetails {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Application application;
 
     /** 계정이 가지고 있는 권한들을 반환 */

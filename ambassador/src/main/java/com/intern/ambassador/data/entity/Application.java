@@ -33,7 +33,7 @@ public class Application extends BaseEntity {
     @Lob
     private String lastWord;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }
