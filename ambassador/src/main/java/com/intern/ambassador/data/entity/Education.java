@@ -19,9 +19,7 @@ public class Education extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eno;
 
-
     private String name;
-
 
     @Enumerated(EnumType.STRING)
     private EduType type;
