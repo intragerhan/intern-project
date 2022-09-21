@@ -10,7 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserResponseDto {
-
+    /**
+     * Entity 에서 DTO로 변환할 때 사용
+     */
     private Long uno;
     private String uid;
     private String password;

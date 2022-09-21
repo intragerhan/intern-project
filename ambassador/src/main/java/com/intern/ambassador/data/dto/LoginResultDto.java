@@ -8,11 +8,11 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignInResultDto extends SignUpResultDto {
+public class LoginResultDto extends UserResultDto {
     private String token;
 
     @Builder
-    public SignInResultDto(boolean success, int code, String msg, String token) {
+    public LoginResultDto(boolean success, int code, String msg, String token) {
         super(success, code, msg);
         this.token = token;
     }

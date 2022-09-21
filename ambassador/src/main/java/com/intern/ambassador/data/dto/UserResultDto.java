@@ -8,7 +8,10 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpResultDto {
+public class UserResultDto {
+    /**
+     * 상태값 반환
+     */
     private boolean success;
     private int code;
     private String msg;

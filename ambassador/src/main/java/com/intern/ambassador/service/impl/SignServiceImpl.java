@@ -2,10 +2,9 @@ package com.intern.ambassador.service.impl;
 
 import com.intern.ambassador.common.CommonResponse;
 import com.intern.ambassador.config.security.JwtTokenProvider;
-import com.intern.ambassador.data.dto.SignInResultDto;
-import com.intern.ambassador.data.dto.SignUpRequestDto;
-import com.intern.ambassador.data.dto.SignUpResultDto;
-import com.intern.ambassador.data.dto.UserDto;
+import com.intern.ambassador.data.dto.LoginResultDto;
+import com.intern.ambassador.data.dto.UserRequestDto;
+import com.intern.ambassador.data.dto.UserResultDto;
 import com.intern.ambassador.data.entity.User;
 import com.intern.ambassador.data.repository.UserRepository;
 import com.intern.ambassador.service.SignService;
@@ -34,49 +33,35 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
-    public SignUpResultDto signUp(String id, String password, String email,
-                                  String name, int age, String phone, String role) {
+    public UserResultDto signUp(String id, String password, String email,
+                                String name, int age, String phone) {
         LOGGER.info("[getSignUpResult] 회원 가입 정보 전달");
-        SignUpRequestDto signUpRequestDto = gatherInfo(id, password, email, name, age, phone);
-        User convertedInfo = convertDtoToEntity(signUpRequestDto);
-        User user;
-        if(role.equalsIgnoreCase("admin")) {
-            user = User.builder()
-                    .uid(convertedInfo.getUid())
-                    .email(convertedInfo.getEmail())
-                    .name(convertedInfo.getName())
-                    .age(convertedInfo.getAge())
-                    .phoneNumber(convertedInfo.getPhoneNumber())
-                    .password(passwordEncoder.encode(convertedInfo.getPassword()))
-                    .roles(Collections.singletonList("ROLE_ADMIN"))
-                    .build();
-        } else {
-            user = User.builder()
-                    .uid(convertedInfo.getUid())
-                    .email(convertedInfo.getEmail())
-                    .name(convertedInfo.getName())
-                    .age(convertedInfo.getAge())
-                    .phoneNumber(convertedInfo.getPhoneNumber())
-                    .password(passwordEncoder.encode(convertedInfo.getPassword()))
+        User converted = convertDtoToEntity(gatherInfo(id, password, email, name, age, phone));
+        User user = User.builder()
+                    .uid(converted.getUid())
+                    .email(converted.getEmail())
+                    .name(converted.getName())
+                    .age(converted.getAge())
+                    .phoneNumber(converted.getPhoneNumber())
+                    .password(passwordEncoder.encode(converted.getPassword()))
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
-        }
         User savedUser = userRepository.save(user);
-        SignUpResultDto signUpResultDto = new SignInResultDto();
+        UserResultDto userResultDto = new LoginResultDto();
 
         LOGGER.info("[getSignUpResult] userEntity 값이 들어왔는지 확인 후 결과값 주입");
         if(!savedUser.getName().isEmpty()) {
             LOGGER.info("[getSignUpResult] 정상 처리 완료");
-            setSuccessResult(signUpResultDto);
+            setSuccessResult(userResultDto);
         } else {
             LOGGER.info("[getSignUpResult] 실패 처리 완료");
-            setFailResult(signUpResultDto);
+            setFailResult(userResultDto);
         }
-        return signUpResultDto;
+        return userResultDto;
     }
 
     @Override
-    public SignInResultDto signIn(String id, String password) throws RuntimeException {
+    public LoginResultDto signIn(String id, String password) throws RuntimeException {
         LOGGER.info("[getSignInResult] signDataHandler로 회원 정보 요청");
         User user = userRepository.getByUid(id);
         LOGGER.info("[getSignInResult] Id : {}", id);
@@ -87,52 +72,52 @@ public class SignServiceImpl implements SignService {
         }
         LOGGER.info("[getSignInResult] 패스워드 일치");
 
-        LOGGER.info("[getSignInResult] SignInResultDto 객체 생성");
-        SignInResultDto signInResultDto = SignInResultDto.builder()
+        LOGGER.info("[getSignInResult] LoginResultDto 객체 생성");
+        LoginResultDto loginResultDto = LoginResultDto.builder()
                 .token(jwtTokenProvider.createToken(String.valueOf(user.getUid()), user.getRoles()))
                 .build();
 
-        LOGGER.info("[getSignInResult] SignInResultDto 객체에 값 주입");
-        setSuccessResult(signInResultDto);
+        LOGGER.info("[getSignInResult] LoginResultDto 객체에 값 주입");
+        setSuccessResult(loginResultDto);
 
-        return signInResultDto;
+        return loginResultDto;
     }
 
-    private void setSuccessResult(SignUpResultDto result) {
+    private void setSuccessResult(UserResultDto result) {
         result.setSuccess(true);
         result.setCode(CommonResponse.SUCCESS.getCode());
         result.setMsg(CommonResponse.SUCCESS.getMsg());
     }
 
-    private void setFailResult(SignUpResultDto result) {
+    private void setFailResult(UserResultDto result) {
         result.setSuccess(false);
         result.setCode(CommonResponse.FAIL.getCode());
         result.setMsg(CommonResponse.FAIL.getMsg());
     }
 
-    private SignUpRequestDto gatherInfo(String id, String password, String email,
-                                        String name, int age, String phone) {
-        SignUpRequestDto signUpRequestDto = new SignUpRequestDto();
+    private UserRequestDto gatherInfo(String id, String password, String email,
+                                      String name, int age, String phone) {
+        UserRequestDto userRequestDto = new UserRequestDto();
 
-        signUpRequestDto.setUid(id);
-        signUpRequestDto.setPassword(password);
-        signUpRequestDto.setEmail(email);
-        signUpRequestDto.setName(name);
-        signUpRequestDto.setAge(age);
-        signUpRequestDto.setPhoneNumber(phone);
+        userRequestDto.setUid(id);
+        userRequestDto.setPassword(password);
+        userRequestDto.setEmail(email);
+        userRequestDto.setName(name);
+        userRequestDto.setAge(age);
+        userRequestDto.setPhoneNumber(phone);
 
-        return signUpRequestDto;
+        return userRequestDto;
     }
 
-    private User convertDtoToEntity(SignUpRequestDto signUpRequestDto) {
+    private User convertDtoToEntity(UserRequestDto userRequestDto) {
         User user = new User();
 
-        user.setUid(signUpRequestDto.getUid());
-        user.setPassword(signUpRequestDto.getPassword());
-        user.setEmail(signUpRequestDto.getEmail());
-        user.setName(signUpRequestDto.getName());
-        user.setAge(signUpRequestDto.getAge());
-        user.setPhoneNumber(signUpRequestDto.getPhoneNumber());
+        user.setUid(userRequestDto.getUid());
+        user.setPassword(userRequestDto.getPassword());
+        user.setEmail(userRequestDto.getEmail());
+        user.setName(userRequestDto.getName());
+        user.setAge(userRequestDto.getAge());
+        user.setPhoneNumber(userRequestDto.getPhoneNumber());
 
         return user;
     }

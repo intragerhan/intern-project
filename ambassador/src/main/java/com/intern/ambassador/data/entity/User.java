@@ -1,14 +1,12 @@
 package com.intern.ambassador.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.intern.ambassador.config.annotation.Password;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +21,8 @@ import java.util.stream.Collectors;
 @Table
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -33,7 +32,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Email
     @Column(nullable = false)
     private String email;
 
@@ -50,7 +48,7 @@ public class User implements UserDetails {
     private List<String> roles = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Application application;
+    private Apply apply;
 
     /** 계정이 가지고 있는 권한들을 반환 */
     @Override

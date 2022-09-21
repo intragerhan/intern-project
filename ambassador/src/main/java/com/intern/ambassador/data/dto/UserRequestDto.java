@@ -2,10 +2,7 @@ package com.intern.ambassador.data.dto;
 
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -14,8 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
-
+public class UserRequestDto {
     @NotBlank(message = "아이디는 필수로 입력해주셔야 합니다.")
     private String uid;
 
@@ -37,5 +33,5 @@ public class UserDto {
     @Pattern(regexp = "01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$")
     private String phoneNumber;
 
-    private List<String> roles = new ArrayList<>();
+    private String roles;
 }

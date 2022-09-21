@@ -24,9 +24,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests() // 애플리케이션에 들어오는 요청에 대한 사용 권한 체크
                 .antMatchers("/sign-api/sign-in", "/sign-api/sign-up", "/sign-api/exception").permitAll()
-                .antMatchers(HttpMethod.GET, "/application/**").permitAll() // application으로 시작하는 경로의 GET 요청은 모두 허용
+                .antMatchers( "/applications/**").permitAll() // application으로 시작하는 경로의 GET 요청은 모두 허용
                 .antMatchers("**exception**").permitAll() // exception 이라는 단어가 들어간 경로는 모두 허용
-                .anyRequest().hasAnyRole("ADMIN","USER") // 기타 요청은 인증된 권한을 가진 사용자에게만 허용(ADMIN,USER)
+                .anyRequest().hasRole("ADMIN") // 기타 요청은 인증된 권한을 가진 사용자에게만 허용(ADMIN,USER)
                 .and()
                 .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()) // 권한을 확인하는 과정에서 통과하지 못 하는 예외가 발생할 경우 예외 전달.
                 .and()

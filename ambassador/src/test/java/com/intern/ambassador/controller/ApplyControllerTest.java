@@ -1,11 +1,9 @@
 package com.intern.ambassador.controller;
 
 import com.google.gson.Gson;
-import com.intern.ambassador.data.dto.ApplicationDto;
-import com.intern.ambassador.data.dto.ApplicationResponseDto;
-import com.intern.ambassador.data.entity.Application;
-import com.intern.ambassador.service.ApplicationService;
-import com.intern.ambassador.service.impl.ApplicationServiceImpl;
+import com.intern.ambassador.data.dto.ApplyDto;
+import com.intern.ambassador.data.dto.ApplyResponseDto;
+import com.intern.ambassador.service.impl.ApplyServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +25,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @WebMvcTest 을 사용한 테스트이며, 단위 테스트와 통합 테스트의 중간 개념임
  * 레이어드 아키텍처를 기준으로 각 레이어별로 나누어 테스트를 진행
  */
-@WebMvcTest(ApplicationController.class)
-public class ApplicationControllerTest {
+@WebMvcTest(ApplyController.class)
+public class ApplyControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    ApplicationServiceImpl applicationService;
+    ApplyServiceImpl applicationService;
 
     @Test
     @DisplayName("신청서 데이터 가져오기 테스트")
     void getApplicationTest() throws Exception {
-        given(applicationService.getApplication(123L)).willReturn(new ApplicationResponseDto(123L,
+        given(applicationService.getApplication(123L)).willReturn(new ApplyResponseDto(123L,
                 "지원동기", "피드백을 받는다면", "활동", "장점", "마지막 한 마디"));
 
         String ano = "123";
@@ -61,11 +59,11 @@ public class ApplicationControllerTest {
     @DisplayName("지원서 더미데이터 제출 테스트")
     void submitApplicationTest() throws Exception {
         // Mock 객체에서 특정 메서드가 실행되는 경우 실제 Return을 줄 수 없기 때문에 아래와 같이 가정 사항을 만들어줌
-        given(applicationService.submitApplication(new ApplicationDto(
+        given(applicationService.submitApplication(new ApplyDto(
                 "지원동기", "피드백을 받는다면", "활동", "장점", "마지막 한 마디")))
-                .willReturn(new ApplicationResponseDto(12L, "지원동기", "피드백을 받는다면", "활동", "장점", "마지막 한 마디"));
+                .willReturn(new ApplyResponseDto(12L, "지원동기", "피드백을 받는다면", "활동", "장점", "마지막 한 마디"));
 
-        ApplicationDto applicationDto = ApplicationDto.builder()
+        ApplyDto applyDto = ApplyDto.builder()
                 .reason("지원동기")
                 .feedback("피드백을 받는다면")
                 .activity("활동")
@@ -74,7 +72,7 @@ public class ApplicationControllerTest {
                 .build();
 
         Gson gson = new Gson();
-        String contents = gson.toJson(applicationDto);
+        String contents = gson.toJson(applyDto);
 
         mockMvc.perform(post("/application")
                 .content(contents)
@@ -88,7 +86,7 @@ public class ApplicationControllerTest {
                 .andExpect(jsonPath("$.lastWord").exists())
                 .andDo(print());
 
-        verify(applicationService).submitApplication(new ApplicationDto(
+        verify(applicationService).submitApplication(new ApplyDto(
                 "지원동기", "피드백을 받는다면", "활동", "장점", "마지막 한 마디"));
     }
 }

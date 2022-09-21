@@ -8,9 +8,9 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationResponseDto {
+@Builder
+public class ApplyDto {
 
-    private Long ano;
     private String reason;
     private String feedback;
     private String activity;

@@ -1,7 +1,7 @@
 package com.intern.ambassador.controller;
 
-import com.intern.ambassador.data.dto.SignInResultDto;
-import com.intern.ambassador.data.dto.SignUpResultDto;
+import com.intern.ambassador.data.dto.LoginResultDto;
+import com.intern.ambassador.data.dto.UserResultDto;
 import com.intern.ambassador.service.SignService;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -24,33 +24,32 @@ public class SignController {
     private final SignService signService;
 
     @PostMapping(value = "/sign-in")
-    public SignInResultDto signIn(
+    public LoginResultDto signIn(
             @ApiParam(value = "ID", required = true) @RequestParam String id,
             @ApiParam(value = "password", required = true) @RequestParam String password) throws RuntimeException {
         LOGGER.info("[signIn] 로그인을 시도하고 있습니다. id = {}, pw = ****", id);
-        SignInResultDto signInResultDto = signService.signIn(id, password);
+        LoginResultDto loginResultDto = signService.signIn(id, password);
 
-        if(signInResultDto.getCode() == 0) {
-            LOGGER.info("[signIn] 정상적으로 로그인되었습니다. id : {}, token : {}", id, signInResultDto.getToken());
+        if(loginResultDto.getCode() == 0) {
+            LOGGER.info("[signIn] 정상적으로 로그인되었습니다. id : {}, token : {}", id, loginResultDto.getToken());
         }
-        return signInResultDto;
+        return loginResultDto;
     }
 
     @PostMapping(value = "/sign-up")
-    public SignUpResultDto signUp(
+    public UserResultDto signUp(
             @Validated @ApiParam(value = "ID", required = true) @RequestParam String id,
             @Validated @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
             @Validated @ApiParam(value = "이메일", required = true) @RequestParam String email,
             @Validated @ApiParam(value = "이름", required = true) @RequestParam String name,
             @Validated @ApiParam(value = "나이", required = true) @RequestParam int age,
-            @Validated @ApiParam(value = "핸드폰 번호", required = true) @RequestParam String phone,
-            @ApiParam(value = "권한", required = true) @RequestParam String role) {
-        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, email : {}," +
-                " name : {}, age : {}, phone : {}, role : {}", id, email, name, age, phone, role);
-        SignUpResultDto signUpResultDto = signService.signUp(id, password, email, name, age, phone, role);
+            @Validated @ApiParam(value = "핸드폰 번호", required = true) @RequestParam String phone) {
+        LOGGER.info("[signUp] 회원가입을 수행합니다. id : {}, password: ****, email : {}," +
+                " name : {}, age : {}, phone : {}", id, email, name, age, phone);
+        UserResultDto userResultDto = signService.signUp(id, password, email, name, age, phone);
 
         LOGGER.info("[signUp] 회원가입이 완료되었습니다. id : {}", id);
-        return signUpResultDto;
+        return userResultDto;
     }
 
     @GetMapping(value = "/exception")
