@@ -28,7 +28,9 @@ public class AdminController {
     private final ApplyService applyService;
     private final UserService userService;
 
-    /** 유저 목록 조회 */
+    /**
+     * 유저 목록 조회
+     */
     @GetMapping("/admin")
     public ResponseEntity<List<UserResponseDto>> getUserList() {
         long currentTime = System.currentTimeMillis();
@@ -36,7 +38,9 @@ public class AdminController {
         log.info("[getUserList] Response Time : {}ms", System.currentTimeMillis() - currentTime);
         return ResponseEntity.status(HttpStatus.OK).body(userListDto);
     }
-    /** 관리자가 유저 정보 확인 */
+    /**
+     * 관리자가 유저 정보 확인
+     */
     @GetMapping("/admin/{id}")
     public ResponseEntity<UserResponseDto> getUserByAdmin(@PathVariable Long id) {
         long currentTime = System.currentTimeMillis();
@@ -44,29 +48,35 @@ public class AdminController {
         log.info("[getUserByAdmin] Response Time : {}ms", System.currentTimeMillis() - currentTime);
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
-    /** 관리자가 유저 정보 변경 */
+    /**
+     * 관리자가 유저 정보 변경
+     */
     @PutMapping("/admin/{id}")
     public ResponseEntity<UserResponseDto> updateUserByAdmin(@PathVariable Long id, ChangeUserDto changeUserDto) {
         long currentTime = System.currentTimeMillis();
+        UserResponseDto userResponseDto = null;
         try {
-             userService.changeUserInfo(changeUserDto);
-            log.info("[getUserByAdmin] Response Time : {}ms", System.currentTimeMillis() - currentTime);
-
+            userResponseDto = userService.changeUserInfo(changeUserDto);
+            log.info("[updateUserByAdmin] Response Time : {}ms", System.currentTimeMillis() - currentTime);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
-    /** 관리자가 신청서 확인 */
-    @GetMapping("{id}")
+    /**
+     * 관리자가 신청서 확인
+     */
+    @GetMapping("/admin/{id}/application")
     public ResponseEntity<ApplyResponseDto> inspectApplication(@PathVariable("id") Long ano) {
         ApplyResponseDto applyResponseDto = applyService.getApplication(ano);
         return ResponseEntity.status(HttpStatus.OK).body(applyResponseDto);
     }
-    /** 관리자가 신청서 삭제 */
-    @DeleteMapping
-    public ResponseEntity<String> deleteApplication(Long ano) throws Exception {
+    /**
+     * 관리자가 신청서 삭제
+     */
+    @DeleteMapping("/admin/{id}/application/{ano}")
+    public ResponseEntity<String> deleteApplication(@PathVariable Long id, @PathVariable Long ano) throws Exception {
         applyService.deleteApplication(ano);
         return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
     }

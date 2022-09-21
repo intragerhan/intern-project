@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class ApplyController {
     private final ApplyService applyService;
 
-    /** 지원자가 신청서 제출 */
+    /**
+     * 지원자가 신청서 제출
+     */
     @PostMapping
     public ResponseEntity<ApplyResponseDto> submitApplication(@RequestBody ApplyDto applyDto) {
         long currentTime = System.currentTimeMillis();
@@ -31,14 +33,18 @@ public class ApplyController {
         log.info("[submitApplication] Response Time : {}ms", System.currentTimeMillis() - currentTime);
         return ResponseEntity.status(HttpStatus.OK).body(applyResponseDto);
     }
-    /** 지원자가 신청서 수정 */
+    /**
+     * 지원자가 신청서 수정
+     */
     @PutMapping
     public ResponseEntity<ApplyResponseDto> amendContents(
             @RequestBody ChangeContentsDto changeContentsDto) throws Exception {
         ApplyResponseDto applyResponseDto = applyService.changeContents(changeContentsDto);
         return ResponseEntity.status(HttpStatus.OK).body(applyResponseDto);
     }
-    /** 지원자가 신청서 확인 */
+    /**
+     * 지원자가 신청서 확인
+     */
     @GetMapping("{id}")
     public ResponseEntity<ApplyResponseDto> inspectApplication(@PathVariable("id") Long ano) {
         ApplyResponseDto applyResponseDto = applyService.getApplication(ano);

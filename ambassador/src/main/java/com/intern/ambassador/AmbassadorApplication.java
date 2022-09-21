@@ -12,3 +12,4 @@ public class AmbassadorApplication {
     }
 
 }
+/* todo AOP 공부해서 적용해보기 9/22 */
