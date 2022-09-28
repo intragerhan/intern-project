@@ -3,7 +3,7 @@
 (주)럽디에서 6주간 근무하면서 Node.js 기반의 Express.js로 과제 프로젝트를 시작했지만, 
 JWT 기반의 로그인/Sequelize 연동 따로만 개발하고 마무리하지 못했었습니다.
 
-이 과제를 Spring Boot로 마무리하고자 만든 프로젝트 저장소입니다.
+이 과제를 Spring으로 마무리하고자 만든 프로젝트 저장소입니다.
 
 Edu(교육 부분 설문조사) 주제는 보안상 다른 주제로 변경했습니다. -> 관리자가 회원 관리를 할 수 있도록 구현
 
@@ -14,7 +14,10 @@ Edu(교육 부분 설문조사) 주제는 보안상 다른 주제로 변경했�
 - IntelliJ IDEA
 - JDK 11
 - Spring Boot 2.6.11
-- Spring Security (JWT)
+  - Boot starter 2.6.11
+    - Security (JWT)
+    - Validation
+    - Data JPA
 - MySQL 8.0.30
 
 ## ERD
